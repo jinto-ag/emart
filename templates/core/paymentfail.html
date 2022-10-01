@@ -1,0 +1,12 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+<h5 class="text-danger">
+  Payment failed!
+  <span>
+    Back to <a href="{% url 'core:home' %}" class="link-primary">home</a>
+  </span>
+</h5>
+
+{% endblock %}

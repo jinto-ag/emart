@@ -1,0 +1,201 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!-- check out section -->
+<section class="checkout-section">
+  <div class="container py-5">
+    <div class="row justify-content-center mt-3 mb-3">
+      <div class="col-auto">
+        <div class="heading-1">
+          <h1 class="text-center">Checkout</h1>
+          <div class="hl"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8 order-lg-1 order-2">
+        <form method="post">
+          {% csrf_token %}
+          <div class="checkout-accordion-wrap">
+            <div class="accordion" id="accordionExample">
+              <!-- Billing address start-->
+              <div class="card single-accordion">
+                <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                    <button
+                      class="btn btn-link"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseOne"
+                      aria-expanded="true"
+                      aria-controls="collapseOne"
+                    >
+                      {{billing_form.name}}
+                    </button>
+                  </h5>
+                </div>
+                <div
+                  id="collapseOne"
+                  class="accordion-collapse collapse show"
+                  aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="card-body">
+                    <div id="billingAddressForm">
+                      <table
+                        class="table table-borderless table-hover align-middle"
+                      >
+                        <tbody>
+                          {{billing_form.as_table}}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Billing address end -->
+
+              <!-- Shipping address start -->
+              <div class="card single-accordion">
+                <div class="card-header" id="headingTwo">
+                  <h5 class="mb-0">
+                    <button
+                      class="btn btn-link"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseTwo"
+                      aria-expanded="true"
+                      aria-controls="collapseTwo"
+                    >
+                      {{shipping_form.name}}
+                    </button>
+                  </h5>
+                </div>
+                <div
+                  id="collapseTwo"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingTwo"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="card-body">
+                    <div class="form-check m-2">
+                      <label for="formCheckInputOne" class="form-check-label"
+                        >Same as Billing Address</label
+                      >
+                      <input
+                        id="formCheckInputOne"
+                        type="checkbox"
+                        class="form-check-input form-copy-btn"
+                        data-copy-source="#billingAddressForm"
+                        data-copy-destination="#shippingForm"
+                        data-copy-exclude=""
+                        name="same_as_billing_address"
+                      />
+                    </div>
+                    <div id="shippingForm">
+                      <table class="table table-borderless align-middle">
+                        <tbody>
+                          {{shipping_form.as_table}}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Shipping address end -->
+
+              <!-- Card details -->
+              <div class="card single-accordion">
+                <div class="card-header" id="headingThree">
+                  <h5 class="mb-0">
+                    <button
+                      class="btn btn-link"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseThree"
+                      aria-expanded="true"
+                      aria-controls="collapseThree"
+                    >
+                      Card Details
+                    </button>
+                  </h5>
+                </div>
+                <div
+                  id="collapseThree"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingThree"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="card-body">
+                    <div class="billing-address-form">
+                      <table
+                        class="table table-bordered table-hover align-middle"
+                      >
+                        <tbody>
+                          {{card_form.as_table}}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Place order button start -->
+              <button
+                type="submit"
+                class="btn btn-cart rounded-5 my-3 px-4 py-3"
+                id="orderPlaceBtn"
+              >
+                Place Order
+              </button>
+              <!-- Place order button end -->
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-lg-4 mb-3 order-lg-2 order-1">
+        <div class="card">
+          <div class="card-body">
+            <table class="table caption-top table-hover">
+              <caption>
+                Your order Details
+              </caption>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                {% for item in cart.items %}
+                <tr>
+                  <td>{{item.product.name}}</td>
+                  <td>INR {{item.total}}</td>
+                </tr>
+                {% endfor %}
+
+                <tr>
+                  <td>Delivery Charge</td>
+                  <td>INR 50</td>
+                </tr>
+
+                <tr class="fw-bold">
+                  <td>Subtotal</td>
+                  <td>INR {{cart.total}}</td>
+                </tr>
+
+                <tr class="fw-bold">
+                  <td>Total</td>
+                  <td>INR {{cart.total|add:"50"}}.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- end check out section -->
+
+{% endblock content %}

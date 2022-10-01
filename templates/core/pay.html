@@ -1,0 +1,116 @@
+{% extends 'base.html' %} {% block content %}
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2 text-center">
+        <div class="breadcrumb-text">
+          <p>Fresh and Organic</p>
+          <h1>Check Out Product</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end breadcrumb section -->
+<div class="container mt-150 mb-150">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <form action="" method="post" id="paymentForm">
+            {% csrf_token %}
+            <table class="table table-stripped">
+              <thead></thead>
+              <tbody>
+                <tr>
+                  <th>Order ID:</th>
+                  <td>{{razorpay_order_id}}</td>
+                </tr>
+                <tr>
+                  <th>Order Amount:</th>
+                  <td>{{razorpay_currency}} {{razorpay_amount}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <button id="rzp-button1" class="btn btn-cart rounded-5 px-4 py-3">
+              Pay
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+  const paymentForm = document.getElementById("paymentForm");
+  function appendDataToForm(form, data) {
+    for (const key in data) {
+      value = data[key];
+      input = document.createElement("input");
+      input.setAttribute("type", "hidden");
+      input.setAttribute("name", key);
+      input.setAttribute("value", value);
+      form.appendChild(input);
+    }
+    return form.submit();
+  }
+  var options = {
+    key: "{{razorpay_merchant_key}}",
+    amount: "{{razorpay_amount}}",
+    currency: "{{razorpay_currency}}",
+    name: "Emart",
+    description: "Test Transaction",
+    image: "",
+
+    // callback_url: "{{ razorpay_callback_url }}",
+    order_id: "{{razorpay_order_id}}",
+
+    handler: function (response) {
+      let URL = "{{ razorpay_callback_url }}";
+      let params = {
+        razorpay_payment_id: response.razorpay_payment_id,
+        razorpay_order_id: response.razorpay_order_id,
+        razorpay_signature: response.razorpay_signature,
+      };
+
+      appendDataToForm(paymentForm, params);
+
+      alert("Successfull...");
+      alert(response.razorpay_payment_id);
+      alert(response.razorpay_order_id);
+      alert(response.razorpay_signature);
+    },
+    prefill: {
+      name: "{{user.profile.first_name}}",
+      email: "{{user.email}}",
+      contact: "{{user.profile.phone}}",
+    },
+    notes: {
+      address: "Razorpay Corporate Office",
+    },
+    theme: {
+      color: "#3399cc",
+    },
+  };
+
+  var rzp1 = new Razorpay(options);
+
+  rzp1.on("payment.failed", function (response) {
+    alert(response.error.code);
+    alert(response.error.description);
+    alert(response.error.source);
+    alert(response.error.step);
+    alert(response.error.reason);
+    alert(response.error.metadata.order_id);
+    alert(response.error.metadata.payment_id);
+  });
+  document.getElementById("rzp-button1").onclick = function (e) {
+    rzp1.open();
+    e.preventDefault();
+  };
+</script>
+
+{% endblock content %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %} {% block content %}
+
+<!-- cart -->
+<div class="cart-section">
+  <div class="container py-5">
+    <div class="row justify-content-center mt-3 mb-3">
+      <div class="col-auto">
+        <div class="heading-1">
+          <h1 class="text-center">Profile</h1>
+          <div class="hl"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row g-3 align-items-lg-start">
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <img
+              src="{{profile_form.instance.image.url}}"
+              class="card-img"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">About Me</h5>
+              {{profile_form.as_p}}
+            </div>
+          </div>
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Address</h5>
+
+              {{address_form.as_p}}
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-dark rounded-5 px-4 py-3 text-uppercase"
+          >
+            Update
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end cart -->
+{% endblock content %}

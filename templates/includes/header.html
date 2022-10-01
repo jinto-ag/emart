@@ -1,0 +1,157 @@
+{% load static %}
+<!-- header start -->
+<header class="sticky-top">
+  <nav class="navbar navbar-expand-lg bg-dark shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand text-light" href="#">{{project_name}}</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav align-items-lg-center me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="{% url 'core:home' %}"
+              >Home</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:about' %}">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:contact' %}">Contact Us</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:shop' %}">Shop</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:category_list' %}">Categories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:cart' %}">Cart</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{user}}
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'core:profile' %}">Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'core:dashboard' %}">Dashboard</a></li>
+              <li><a class="dropdown-item" href="{% url 'core:order_history' %}">Order History</a></li>
+              <li><a class="dropdown-item" href="{% url 'core:wishlist_list' %}">Wishlist</a></li>
+              <li><a class="dropdown-item" href="{% url 'core:settings' %}">Settings</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item" href="{% url 'core:logout' %}"
+                  >Logout</a
+                >
+              </li>
+            </ul>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:signup' %}">Sign up</a>
+          </li>
+          {% endif %}
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <div class="d-inline-block position-relative">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span
+                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                >
+                  {{cart.items|length|default:"0"}}
+                  <span class="visually-hidden">unread messages</span>
+                </span>
+              </div>
+            </a>
+            <ul class="dropdown-menu m-0">
+              <li class="p-3">
+                <table
+                  class="table caption-top table-borderless table-striped mb-0 align-middle text-center"
+                >
+                  <caption>
+                    List of Products
+                  </caption>
+
+                  <thead class="">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Qty</th>
+                      <th scope="col">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-group-divider">
+                    {% for item in cart.items %}
+                    <tr>
+                      <th scope="row">{{forloop.counter}}</th>
+                      <td class="text-left text-nowrap">
+                        <a class="link-primary" href="{% url 'core:product_detail' item.product.id %}"
+                          >{{item.product.name}}</a
+                        >
+                      </td>
+                      <td>{{item.product.price}}</td>
+                      <td>{{item.quantity}}</td>
+                      <td class="text-right">{{item.total}}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                      <td class="text-left" colspan="5">Nothing found!</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:cart' %}"> </a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search for products"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-light" type="submit">
+          <i class="fa-solid fa-search"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</header>
+<!-- header end -->

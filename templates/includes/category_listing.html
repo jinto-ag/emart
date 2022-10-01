@@ -1,0 +1,33 @@
+{% for category in categories %}
+
+<!-- category section -->
+<div class="col-lg-4 col-md-6 text-center">
+  <div class="single-product-item">
+    <div class="product-image">
+      <a href="single-category.html"
+        ><img src="{{category.image.url}}" alt=""
+      /></a>
+    </div>
+    <h3>{{category.name}}</h3>
+    <p class="product-price">
+      <span>Per {{category.unit}}</span>
+      <i class="fa-solid fa-inr"></i>
+      {{category.price}}
+    </p>
+    <a href="cart.html" class="cart-btn"
+      ><i class="fa-solid fa-shopping-cart"></i> Add to Cart</a
+    >
+  </div>
+</div>
+
+{% empty %}
+
+<div class="col text-center">
+  <div class="card rounded-2 border-0">
+    <div class="card-body">
+      <h3>Nothing found!!</h3>
+    </div>
+  </div>
+</div>
+{% endfor %}
+<!-- end product section -->

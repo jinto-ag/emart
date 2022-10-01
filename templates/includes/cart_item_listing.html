@@ -1,0 +1,16 @@
+{% for form in formset %}
+<tr class="table-body-row">
+  <td class="product-remove">
+    <button class="btn border-0">
+      <i class="far fa-window-close"></i>
+    </button>
+  </td>
+  <td class="product-image">
+    <img src="{{form.instance.product.image.url}}" alt="" />
+  </td>
+  <td class="product-name">{{form.instance.product}}</td>
+  <td class="product-price">INR {{form.instance.product.price}}</td>
+  <td class="product-quantity">{{form.quantity}}</td>
+  <td class="product-total">INR {{form.instance.total}}</td>
+</tr>
+{% endfor %}

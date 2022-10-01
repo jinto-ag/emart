@@ -1,0 +1,93 @@
+{% extends 'base.html' %} {% block content %}
+
+<!-- products -->
+<div class="container py-5">
+  <div class="row justify-content-center mt-3 mb-3">
+    <div class="col-auto">
+      <div class="heading-1">
+        <h1 class="text-center">Product Details</h1>
+        <div class="hl"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-2">
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <img src="{{product.image.url}}" alt="..." class="card-img" />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 px-lg-4">
+      <table class="table table-borderless table-hover">
+        <thead></thead>
+        <tbody>
+          <tr>
+            <th>Name</th>
+            <td>{{product.name}}</td>
+          </tr>
+          <tr>
+            <th>Description</th>
+            <td>{{product.description}}</td>
+          </tr>
+          <tr>
+            <th>Price</th>
+            <td>INR {{product.price}}</td>
+          </tr>
+          <tr>
+            <th>Category</th>
+            <td>{{product.category}}</td>
+          </tr>
+          <tr class="text-nowrap">
+            <th>Last Updated</th>
+            <td>{{product.updated_on|date}}</td>
+          </tr>
+          <tr>
+            <th>Rating</th>
+            <td>{{product.reviewmodel.rating}}</td>
+          </tr>
+          <tr>
+            <td class="" colspan="2">
+              <form action="{% url 'core:cart_add' %}" class="d-inline-block" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{product.id}}" />
+                <input type="hidden" name="quantity" value="1" />
+                <button
+                  type="submit"
+                  class="btn btn-primary border-0 rounded-5 py-3 px-4 text-nowrap"
+                >
+                  <i class="fa-solid fa-shopping-cart"></i> Add to Cart
+                </button>
+              </form>
+
+              <a
+                href="{% url 'core:add_to_wishlist' product.id %}"
+                class="btn btn-dark border-0 rounded-5 py-3 px-4"
+              >
+                <i class="fa-solid fa-heart"></i>
+                Add to wishlist
+              </a>
+              <a
+                href="{% url 'core:add_product_review' product.id %}"
+                class="btn btn-dark rounded-5 px-4 py-3"
+              >
+                <i class="fa-solid fa-star"></i>
+                Add Review
+              </a>
+              <a
+                href="{% url 'core:shop' %}"
+                class="btn btn-dark rounded-5 px-4 py-3"
+              >
+                <i class="fa-solid fa-arrow-left"></i>
+                Shop
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- end products -->
+{% endblock content %}

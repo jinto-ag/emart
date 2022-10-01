@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block content %}
+
+<!-- products -->
+<div class="container py-5">
+  <div class="row justify-content-center mt-3 mb-3">
+    <div class="col-auto">
+      <div class="heading-1">
+        <h1 class="text-center">Orders</h1>
+        <div class="hl"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 justify-content-center">
+    {% for order in orders %}
+
+    <div class="col-auto">
+      <a href="{% url 'core:order_detail' order.id %}" class="link-dark">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="card-title">{{order.id|upper}}</h6>
+            <p class="card-text">INR {{order.amount}}</p>
+            <ul>
+              {% for item in order.cart.items %}
+
+              <li>{{item}}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% empty %}
+    <h4>Nothing Found!!</h4>
+    {% endfor %}
+  </div>
+</div>
+<!-- end products -->
+{% endblock content %}

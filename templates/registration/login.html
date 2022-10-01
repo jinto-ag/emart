@@ -1,0 +1,59 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<!-- login start -->
+<section id="login" class="login-section mb-5">
+  <div class="container">
+    <div class="row align-items-lg-center">
+      <div class="col-lg-6">
+        <h1>Login</h1>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus, id.
+          Commodi quisquam necessitatibus impedit, sit excepturi, nihil ratione
+          temporibus ullam omnis consequatur deserunt quidem, voluptatem
+          distinctio error cupiditate ab blanditiis rem facilis porro dicta
+          delectus veritatis vitae suscipit deleniti? Itaque, aliquam similique
+          sit nulla sint laboriosam odit minima vitae animi perspiciatis
+          voluptatibus aut possimus consequatur voluptates maxime quo blanditiis
+          ut culpa magni accusamus unde consequuntur.
+        </p>
+      </div>
+      <div class="col-lg-6">
+        <div class="card">
+          <img
+            src="{% static 'img/logo.png' %}"
+            class="card-img-top bg-dark"
+            alt="..."
+          />
+          <div class="card-body">
+            <form action="{% url 'core:login' %}" method="post" id="loginForm">
+              {% csrf_token %} {{login_form.as_p}}
+              <div class="d-flex justify-content-between">
+                <a href="{% url 'core:password_reset' %}" class="link-primary">Forgot password?</a>
+                <a href="{% url 'core:signup' %}" class="link-primary">Create new account</a>
+              </div>
+              <h5 class="text-center">OR</h5>
+              {% include 'socialaccount/provider_list.html' %}
+
+              <div class="">
+                <button
+                  class="g-recaptcha btn btn-primary rounded-3 px-4 py-2 mt-3"
+                  data-sitekey="{{reCAPTCHA_site_key}}"
+                  data-callback="onSubmit"
+                  data-action="submit"
+                >
+                  Login
+                </button>
+                <script>
+                  function onSubmit(token) {
+                    document.getElementById("loginForm").submit();
+                  }
+                </script>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- login end -->
+{% endblock %}

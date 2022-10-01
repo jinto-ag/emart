@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% load i18n %} {% block content %}
+<section class="vh-100 bg-dark">
+  <div class="container h-100">
+    <div class="row h-100 align-items-lg-center justify-content-lg-center">
+      <div class="col-lg-6">
+        
+        <div class="card">
+          <div class="card-body">
+            {% block head_title %}{% trans "Sign In" %}{% endblock %}
+            {% if process == "connect" %}
+            <h1>
+              {% blocktrans with provider.name as provider %}
+              Connect 
+              {{ provider}}
+              {% endblocktrans %}
+            </h1>
+
+            <p>
+              {% blocktrans with provider.name as provider %}
+              You are about to
+              connect a new third party account from {{ provider }}.
+              {% endblocktrans %}
+            </p>
+            {% else %}
+            <h5 class="card-title">
+              {% blocktrans with provider.name as provider %}
+              Sign In Via 
+              {{ provider }}
+              {% endblocktrans %}
+            </h5>
+
+            <p class="card-text">
+              {% blocktrans with provider.name as provider %}
+              You are about to
+              sign in using a third party account from {{ provider }}.
+              {% endblocktrans %}
+            </p>
+            {% endif %}
+
+            <form method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary rounded-3 px-4 py-2">
+                {% trans "Continue" %}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

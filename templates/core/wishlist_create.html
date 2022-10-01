@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block content %}
+
+<!-- products -->
+<div class="container py-5">
+  <div class="row justify-content-center mt-3 mb-3">
+    <div class="col-auto">
+      <div class="heading-1">
+        <h1 class="text-center">Create Whishlist</h1>
+        <div class="hl"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <form action="" method="post">
+            {% csrf_token %} {{form.as_p}}
+            <button class="btn btn-dark rounded-5 px-4 py-3">Create</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end products -->
+{% endblock content %}

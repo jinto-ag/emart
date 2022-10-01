@@ -1,0 +1,45 @@
+{% for product in products %}
+
+<!-- product section -->
+<div class="col-lg-4 col-md-6 text-center">
+  <div class="single-product-item">
+    <div class="product-image">
+      <a href="{% url 'core:product_detail' product.id %}"
+        ><img src="{{product.image.url}}" alt=""
+      /></a>
+    </div>
+    <h3>{{product.name}}</h3>
+    <p class="product-price">
+      <span>Per {{product.unit}}</span>
+      <i class="fa-solid fa-inr"></i>
+      {{product.price}}
+    </p>
+    <form action="{% url 'core:cart_add' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="product_id" value="{{product.id}}" />
+      <input type="hidden" name="quantity" value="1" />
+      <a
+        href="{% url 'core:add_to_wishlist' product.id %}"
+        class="btn btn-cart border-0 rounded-5 py-3 px-4"
+        >
+        <i class="fa-solid fa-heart"></i>
+        Add to wishlist
+        </a>
+      <button type="submit" class="btn btn-cart border-0 rounded-5 py-3 px-4">
+        <i class="fa-solid fa-shopping-cart"></i> Add to Cart
+      </button>
+    </form>
+  </div>
+</div>
+
+{% empty %}
+
+<div class="col text-center">
+  <div class="card rounded-2 border-0">
+    <div class="card-body">
+      <h3>Nothing found!!</h3>
+    </div>
+  </div>
+</div>
+{% endfor %}
+<!-- end product section -->

@@ -1,0 +1,60 @@
+{% extends 'base.html' %} {% block content %}
+
+<!-- payment start -->
+<div class="container py-5">
+  <div class="row justify-content-center mt-3 mb-3">
+    <div class="col-auto">
+      <div class="heading-1">
+        <h1 class="text-center">Payments</h1>
+        <div class="hl"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-hover text-center">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col" class="text-start">Payment ID</th>
+            <th scope="col">Payment Status</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for payment in payments %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td scope="row" class="text-start">
+              <a href="" >{{payment.id}}</a>
+            </td>
+            <td scope="row">{{payment.status}}</td>
+            <td scope="row">
+              <span class="badge rounded-pill text-bg-info h6 px-4 py-2">
+                INR {{payment.order.amount}}
+              </span>
+            </td>
+          </tr>
+
+          {% empty %}
+          <tr class="text-center">
+            <td colspan="5">
+              <h3>Sorry!</h3>
+              <p>You don't have any order to show!</p>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <a href="{% url 'core:shop' %}" class="btn btn-dark rounded-pill px-4 py-2">Shop</a>
+    </div>
+  </div>
+</div>
+<!-- payment end -->
+{% endblock content %}

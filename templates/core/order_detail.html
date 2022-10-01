@@ -1,0 +1,135 @@
+{% extends 'base.html' %} {% block content %}
+
+<!-- products -->
+<div class="container py-5">
+  <div class="row justify-content-center mt-3 mb-3">
+    <div class="col-auto">
+      <div class="heading-1">
+        <h1 class="text-center">Order Details</h1>
+        <div class="hl"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-hover align-middle caption-top text-center">
+        <caption>
+          Order ID: {{order.id}}
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Image</th>
+            <th scope="col" class="text-start">Product</th>
+            <th scope="col">Qty</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for item in order.cart.items %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td scope="row">
+              <a href="{% url 'core:product_detail' item.product.id %}">
+                <div class="card mx-auto" style="width: 100px; height: 100xpx">
+                  <img
+                    src="{{item.product.image.url}}"
+                    alt=""
+                    class="card-img"
+                  />
+                </div>
+              </a>
+            </td>
+            <td scope="row" class="text-start">{{item.product}}</td>
+            <td scope="row">{{item.quantity}}</td>
+            <td scope="row">INR {{item.total}}</td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+        <tfoot class="table-group-divider">
+          <tr>
+            <td colspan="5" class="text-start"><b>Order Date: </b>{{order.updated_on|date}}</td>
+          </tr>
+          <tr>
+            <td colspan="4" class="text-start">Delivery Charge</td>
+            <td>INR 50.00</td>
+          </tr>
+          <tr>
+            <td colspan="4" class="text-start">TAX (18%)</td>
+            <td>INR 50.00</td>
+          </tr>
+          <tr>
+            <th colspan="4" class="text-start">Total</th>
+            <th>
+              <span class="badge rounded-pill text-bg-info h6 px-4 py-2">
+                INR {{order.amount}}
+              </span>
+            </th>
+          </tr>
+        </tfoot>
+      </table>
+      <!-- Payment Details -->
+      <table class="table table-hover align-middle caption-top">
+        <caption>
+          Payment Details
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Payment ID</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for payment in order.payment_set.all %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td scope="row">{{payment.id}}</td>
+            <td scope="row">INR {{payment.order.amount}}</td>
+            <td scope="row">{{payment.status}}</td>
+          </tr>
+          {% empty %}
+          <tr class="text-center">
+            <td colspan="4">
+              <h6>Sorry!</h6>
+              <p>No payments are found!</p>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- Address Details -->
+      <table class="table table-hover align-middle caption-top">
+        <caption>
+          Address Details
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Billing Address</th>
+            <th scope="col">Shipping Address</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr>
+            <td>1</td>
+            <td>{{order.billing_address}}</td>
+            <td>{{order.shipping_address}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <a href="{% url 'core:shop' %}" class="btn btn-dark rounded-pill px-4 py-2">Shop</a>
+    </div>
+  </div>
+</div>
+<!-- end products -->
+{% endblock content %}

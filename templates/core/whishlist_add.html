@@ -1,0 +1,77 @@
+{% extends 'base.html' %} {% block content %}
+
+<!-- products -->
+<div class="container py-5">
+  <div class="row justify-content-center mt-3 mb-3">
+    <div class="col-auto">
+      <div class="heading-1">
+        <h1 class="text-center">Add to Whishlist</h1>
+        <div class="hl"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row g-3">
+    <div class="col-lg-6">
+      <div class="card">
+        <img src="{{product.image.url}}" alt="" class="card-img-top" />
+        <div class="card-body">
+          <h5 class="card-title">{{product.name}}</h5>
+          <p class="card-text">{{product.description}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <form action="" method="post">
+        {% csrf_token %}
+        <div class="row row-cols-auto g-2 mb-3">
+          {% for wishlist in wishlists %}
+
+          <div class="col-auto">
+            <div class="card rounded-pill">
+              <div class="card-body">
+                <div class="form-check d-flex align-items-center justify-content-start">
+                  <input
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    name="wishlists"
+                    value="{{wishlist.id}}"
+                    id="id_wishlist_{{wishlist.id}}"
+                    {% if product in wishlist.products.all %}
+                    checked="true"
+                    {% endif %}
+                  />
+                  <label class="form-check-label text-nowrap" for="id_wishlist_{{wishlist.id}}">
+                    <a href="{% url 'core:wishlist_detail' wishlist.id %}"
+                      >{{wishlist.name}}</a
+                    >
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {% empty %}
+          <h5>No wishlist found</h5>
+          {% endfor %}
+        </div>
+        <div class="mb-3">
+
+          <a
+          href="{% url 'core:wishlist_create' %}"
+          class="btn btn-dark rounded-5 px-4 py-3"
+          >Create now</a
+          >
+        </div>
+        <hr>
+        <button class="btn btn-primary rounded-5 px-4 py-3 me-2">Update</button>
+        <a
+          href="{% url 'core:shop' %}"
+          class="btn btn-dark rounded-5 px-4 py-3"
+          >Shop</a
+        >
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end products -->
+{% endblock content %}

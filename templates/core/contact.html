@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!-- contact us start -->
+<section class="contact-section">
+  <div class="container py-5">
+    <div class="row justify-content-center mt-3 mb-3">
+      <div class="col-auto">
+        <div class="heading-1">
+          <h1 class="text-center">Contact Us</h1>
+          <div class="hl"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-lg-center mb-5">
+      <div class="col-lg-6">
+        <div class="card">
+          <img src="{% static 'img/product.png' %}" class="card-img" alt="" />
+          <div class="card-body">
+            <p class="card-text text-center">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam quia
+              corporis obcaecati enim facilis odit sequi, qui sint aliquam
+              assumenda aperiam, voluptate repellat deleniti quis quos? Est nemo
+              blanditiis exercitationem?
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <form action="{% url 'core:contact' %}" method="post">
+              {% csrf_token %} {{contact_form.as_p}}
+              <button class="btn btn-dark rounded-5 px-4 py-3">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- contact us end -->
+
+{% endblock content %}
