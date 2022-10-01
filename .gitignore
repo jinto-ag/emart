@@ -103,6 +103,7 @@ celerybeat.pid
 
 # Environments
 .env
+.env
 .venv
 env/
 venv/
@@ -132,3 +133,4 @@ dmypy.json
 
 # custom
 .env
+emart/.env
