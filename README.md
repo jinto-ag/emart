@@ -8,34 +8,35 @@ development in progress
 - Create .env file in emart/ folder
 - Add following variables
 
-`
+``
 
-  # Django secret key here
-  SECRET_KEY='django-secret-key here'
+    # Django secret key here
+    SECRET_KEY='django-secret-key here'
 
-  # Email Integration
-  EMAIL_HOST="smtp.gmail.com"
-  EMAIL_PORT=587
-  EMAIL_HOST_USER="username_here@gmail.com"
-  EMAIL_HOST_PASSWORD="Password"
+    # Email Integration
+    EMAIL_HOST="smtp.gmail.com"
+    EMAIL_PORT=587
+    EMAIL_HOST_USER="username_here@gmail.com"
+    EMAIL_HOST_PASSWORD="Password"
 
-  # Razorpay Integration
-  RAZORPAY_KEY_ID=
-  RAZORPAY_KEY_SECRET=
+    # Razorpay Integration
+    RAZORPAY_KEY_ID=
+    RAZORPAY_KEY_SECRET=
 
-  # Google recaptcha
-  GOOGLE_RECAPTCHA_SITE_KEY=
-  GOOGLE_RECAPTCHA_SECRET_KEY=
+    # Google recaptcha
+    GOOGLE_RECAPTCHA_SITE_KEY=
+    GOOGLE_RECAPTCHA_SECRET_KEY=
 
-  # Google API KEY
-  GOOGLE_API_KEY=
+    # Google API KEY
+    GOOGLE_API_KEY=
 
-  # Social media Integration
-  # Google
-  GOOGLE_CLIENT_ID=
-  GOOGLE_CLIENT_SECRET=
+    # Social media Integration
+    # Google
+    GOOGLE_CLIENT_ID=
+    GOOGLE_CLIENT_SECRET=
 
-`
+``
+
 ## Getting Started
 
 - Clone the repository by running git clone https://github.com/<username>/emart.git
